@@ -1,3 +1,4 @@
+
 public class singlylist {
 
     private static class Node {
@@ -67,6 +68,38 @@ public class singlylist {
         temp.next = null;
     }
 
+    public void insertInBetween(int data, int position) {
+        // Edge Case 1: If position is 0, it means inserting at the start
+        if (position == 0) {
+            insertNodeAtFirst(data);
+            return;
+        }
+
+        Node newNode = new Node(data);
+        Node temp = head;
+
+        // Traverse to find the node right BEFORE the insertion position
+        for (int i = 0; i < position - 1; i++) {
+            if (temp == null) {
+                System.out.println("Position out of bounds! Current list size is smaller.");
+                return;
+            }
+            temp = temp.next;
+        }
+
+        // Edge Case 2: Check if the insertion point itself is out of bounds
+        if (temp == null) {
+            System.out.println("Position out of bounds!");
+            return;
+        }
+
+        // The magic: Link the new node to the next node, then update the previous node's link
+        newNode.next = temp.next;
+        temp.next = newNode;
+        
+        System.out.println("Successfully inserted " + data + " at position " + position);
+    }
+
     public int getSizeList() {
         int count = 0;
         Node temp = head;
@@ -103,6 +136,9 @@ public class singlylist {
         gc.displayList();
         gc.insertNodeAtEnd(30);
         gc.insertNodeAtEnd(50);
+        gc.getSizeList();
+        gc.displayList();
+        gc.insertInBetween(40, 3);
         gc.getSizeList();
         gc.displayList();
     }
